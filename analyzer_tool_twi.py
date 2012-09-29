@@ -149,19 +149,25 @@ class AnalyzerPanel (wx.ScrolledWindow):
 		if bitcount > 0:	# sample ended with data transfer hanging
 			dg, r = self._new_row()
 			self._log_header (dg, r, stime)
+			print("		"+('End'))
 			dg.SetCellValue (r, 2, 'End')
 			if bitcount > 0:
+				print("			"+(analyzer_tools.partial_bits (bitcount, data)))
 				dg.SetCellValue (r, 3, analyzer_tools.partial_bits (bitcount, data))
 			
 	def _log_header (self, dg, r, sample):
+		print(""+(str (sample)))
 		dg.SetCellValue (r, 0, str (sample))
+		print("	"+(str (self._sample_time (sample)*1e6)))
 		dg.SetCellValue (r, 1, str (self._sample_time (sample)*1e6))
 		
 	def _new_header (self, sample):
 		dg = self.display_grid
 		r = dg.GetNumberRows()
 		dg.AppendRows (1)
+		print(""+(str (sample)))
 		dg.SetCellValue (r, 0, str (sample))
+		print("	"+(str (self._sample_time (sample)*1e6)))
 		dg.SetCellValue (r, 1, str (self._sample_time (sample)*1e6))
 		return dg, r
 		
@@ -174,32 +180,41 @@ class AnalyzerPanel (wx.ScrolledWindow):
 	def _log_ack (self, sample):
 		dg, r = self._new_row()
 		self._log_header (dg, r, sample)
+		print("		"+('ACK'))
 		dg.SetCellValue (r, 2, 'ACK')
 			
 	def _log_addr_byte (self, sample, data):
 		dg, r = self._new_header (sample)
+		print("		"+('Addr'))
 		dg.SetCellValue (r, 2, 'Addr')
+		print("			"+('0x%2x  %s' % (data>>1, 'WR'[data & 1],)))
 		dg.SetCellValue (r, 3, '0x%2x  %s' % (data>>1, 'WR'[data & 1],))
 			
 	def _log_data_byte (self, sample, data, bitcount):
 		dg, r = self._new_header (sample)
+		print("			"+('0x%2x' % (data,)))
 		dg.SetCellValue (r, 3, '0x%2x' % (data,))
 			
 	def _log_glitch (self, sample):
 		dg, r = self._new_header (sample)
+		print("		"+('Glitch'))
 		dg.SetCellValue (r, 2, 'Glitch')
 			
 	def _log_nak (self, sample):
 		dg, r = self._new_header (sample)
+		print("		"+('NAK'))
 		dg.SetCellValue (r, 2, 'NAK')
 			
 	def _log_start (self, sample):
 		dg, r = self._new_header (sample)
+		print("		"+('Start'))
 		dg.SetCellValue (r, 2, 'Start')
 			
 	def _log_stop (self, sample, databyte):
 		dg, r = self._new_header (sample)
+		print("		"+('Stop'))
 		dg.SetCellValue (r, 2, 'Stop')
+		print("			"+(databyte))
 		dg.SetCellValue (r, 3, databyte)
 		
 	def _sample_time (self, sample):
