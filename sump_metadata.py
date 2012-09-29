@@ -26,6 +26,7 @@ headings_en = {
 	0x22: 'Dynamic memory size',
 	0x23: 'Maximum rate',
 	0x24: 'Protocol version',
+	0x25: 'Capabilities',
 	0x40: 'Probes',
 	0x41: 'Protocol version',
 }
