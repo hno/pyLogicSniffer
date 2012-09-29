@@ -477,7 +477,7 @@ class SumpDialog (wx.Dialog):
 			
 		pre_process = (settings.filter, settings.demux)
 		self.pre_process_ctl.SetStringSelection (pre_process_settings.get (pre_process, 'None'))
-		#~ self.rle_ctl.SetValue (settings.rle???)
+		self.rle_ctl.SetValue (settings.rle)
 		self.latestfirst_ctl.SetValue (settings.latest_first)
 		
 		for v in delay_ratio_settings.values:
@@ -512,6 +512,7 @@ class SumpDialog (wx.Dialog):
 		
 		settings.filter, settings.demux = pre_process_settings [self.pre_process_ctl.GetStringSelection()]
 		settings.latest_first = self.latestfirst_ctl.GetValue()
+		settings.rle = self.rle_ctl.GetValue()
 		
 		trigger_enable = settings.trigger_enable = self.trigger_enable_ctl.GetStringSelection()
 		if trigger_enable == 'None':

@@ -50,6 +50,7 @@ class SumpDeviceSettings (object):
 		# general settings ..
 		self.timeout = None
 		self.latest_first = True
+		self.rle = False
 		self.divider = 2			# default sampling rate 50MHz
 		self.read_count = 4096		# default sampling size
 		self.delay_count = 2048		# default before/after 50/50
@@ -272,7 +273,9 @@ class SumpInterface (object):
 				| (settings.filter << 1)
 				| settings.demux
 			))
-		w ('\x00')	# disable RLE compression, alternate number scheme, test modes
+		w (chr (((3 if settings.rle else 0) << 6)
+				| (settings.rle << 0)
+			))
 		w ('\x00')
 		w ('\x00')
 		
